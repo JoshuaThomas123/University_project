@@ -20,7 +20,7 @@ function Hubpage() {
     margin: 0, 
   };
 
-  const buttonStyle = {
+  const button = {
     padding: '10px 20px', 
     fontSize: '16px', 
     backgroundColor: '#ff6347', 
@@ -33,7 +33,7 @@ function Hubpage() {
   return (
     <header style={header}>
       <p style={title}>StudyBot</p>
-      <button style={buttonStyle} onClick={() => navigate('/Login')}>
+      <button style={button} onClick={() => navigate('/Login')}>
         Login
       </button>
     </header>
