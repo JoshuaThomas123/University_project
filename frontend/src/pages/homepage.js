@@ -1,7 +1,7 @@
 import React from 'react';
 import App from '../App'; 
 import Hubpage from './hubpage';
-import image from '../images/flashcards.png';
+import image1 from '../images/flashcards.png';
 import fro222 from '../images/MINDMAPS.jpg';
 import summary from '../images/summary.png';
 import questions from '../images/Icon-round-Question_mark.png';
@@ -13,19 +13,19 @@ function Homepage() {
     color: '#333',
     lineHeight: '1.6',
   };
-  const galleryStyle = {
+  const image2 = {
     display: 'flex', 
     justifyContent: 'space-between', 
     padding: '10px', 
     backgroundColor: '#f9f9f9', 
   };
 
-  const imageStyle = {
+  const image = {
     width: '10%', 
     borderRadius: '0px', 
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
   };
-  const buttonStyle = {
+  const button = {
     padding: '10px 20px', 
     fontSize: '16px',
     backgroundColor: '#ff6347', 
@@ -46,11 +46,11 @@ function Homepage() {
       <main style={mainStyle}>
         <h1>Welcome to the Homepage</h1>
       </main>
-      <div  style ={galleryStyle}>
+      <div  style ={image2}>
       <img
-        src={image} 
+        src={image1} 
          alt="Placeholder 1"
-         style = {imageStyle}
+         style = {image}
         
         
       />
@@ -58,33 +58,33 @@ function Homepage() {
       src = {fro222}
        
         alt="Placeholder 2"
-        style ={imageStyle}
+        style ={image}
         
       />
       <img
         src={summary}
-        style ={imageStyle}
+        style ={image}
         alt="Placeholder 3"
         
       />
        <img
         src={questions}
-        style ={imageStyle}
+        style ={image}
         alt="Placeholder 4"
         
       />
       </div>
-      <div style = {galleryStyle}>
-      <button style={buttonStyle} onClick={() => navigate('/viewpage')}>
+      <div style = {image2}>
+      <button style={button} onClick={() => navigate('/viewpage')}>
         flashcards
       </button>
-      <button style={buttonStyle} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/viewpage')}>
         mindmaps
       </button>
-      <button style={buttonStyle} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/viewpage')}>
        summary page
       </button>
-      <button style={buttonStyle} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/viewpage')}>
         questions
       </button>
 
