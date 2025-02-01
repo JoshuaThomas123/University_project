@@ -7,7 +7,7 @@ import summary from '../images/summary.png';
 import questions from '../images/Icon-round-Question_mark.png';
 import { Navigate, useNavigate } from 'react-router-dom'; 
 function Homepage() {
-  const mainStyle = {
+  const layout = {
     padding: '20px',
     fontSize: '18px',
     color: '#333',
@@ -43,7 +43,7 @@ function Homepage() {
       <Hubpage />
      
       
-      <main style={mainStyle}>
+      <main style={layout}>
         <h1>Welcome to the Homepage</h1>
       </main>
       <div  style ={image2}>
