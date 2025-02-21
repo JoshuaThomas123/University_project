@@ -2,46 +2,40 @@ import React, { useState } from 'react';
 import Hubpage from './hubpage';
 
 function Viewpage() {
-  const [pdfText, setPdfText] = useState(''); 
+  const [pdfText, setPdfText] = useState('');
+  const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
 
-  
   const handleFileUpload = async (event) => {
-    const file = event.target.files[0]; 
+    const file = event.target.files[0];
     if (file && file.type === 'application/pdf') {
-      setLoading(true); 
+      setLoading(true);
       try {
-        const text = await extractTextFromPDF(file);
-        setPdfText(text); 
+        const formData = new FormData();
+        formData.append('file', file);
+
+        
+        const response = await fetch('http://localhost:5000/upload_pdf/1', { 
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          setPdfText(result.pdf_text); 
+          setSummary(result.summary); 
+        } else {
+          alert(result.message || 'Failed to process the PDF file.');
+        }
       } catch (error) {
-        console.error('Error extracting PDF text:', error);
+        console.error('Error uploading PDF:', error);
         alert('Failed to process the PDF file.');
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     } else {
       alert('Please upload a valid PDF file.');
     }
-  };
-
-  
-  const extractTextFromPDF = async (file) => {
-    const arrayBuffer = await file.arrayBuffer(); 
-    const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise; 
-
-    let fullText = '';
-
-  
-    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-      const page = await pdf.getPage(pageNumber);
-      const textContent = await page.getTextContent();
-
-      
-      const pageText = textContent.items.map((item) => item.str).join(' ');
-      fullText += pageText + '\n'; 
-    }
-
-    return fullText; 
   };
 
   return (
@@ -54,6 +48,12 @@ function Viewpage() {
         <div>
           <h3>Extracted Text:</h3>
           <pre>{pdfText}</pre>
+        </div>
+      )}
+      {summary && (
+        <div>
+          <h3>Summary:</h3>
+          <p>{summary}</p>
         </div>
       )}
     </div>
