@@ -2,36 +2,51 @@ import React, { useState } from 'react';
 import Hubpage from './hubpage';
 
 function Viewpage() {
-  const [pdfText, setPdfText] = useState('');
-  const [summary, setSummary] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [pdfText, setPdfText] = useState(''); // store pdf text
+  const [summary, setSummary] = useState(''); // store summary
+  const [loading, setLoading] = useState(false); // track loading
 
+  //  handle PDF file 
   const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]; 
     if (file && file.type === 'application/pdf') {
-      setLoading(true);
+      setLoading(true); 
       try {
         const formData = new FormData();
         formData.append('file', file);
 
-        
-        const response = await fetch('http://localhost:5000/upload_pdf/1', { 
+        // upload pdf
+        const uploadResponse = await fetch('http://localhost:5000/upload_pdf/1', {
           method: 'POST',
           body: formData,
         });
 
-        const result = await response.json();
-        if (response.ok) {
-          setPdfText(result.pdf_text); 
-          setSummary(result.summary); 
+        const uploadResult = await uploadResponse.json();
+
+        if (uploadResponse.ok) {
+         
+          setPdfText(uploadResult.pdf_text);
+
+          // gets summary text
+          const summarizeResponse = await fetch('http://localhost:5000/summarize/1', {
+            method: 'POST',
+          });
+
+          const summarizeResult = await summarizeResponse.json();
+
+          if (summarizeResponse.ok) {
+            setSummary(summarizeResult.summary); 
+          } else {
+            alert(summarizeResult.message || 'Error creating summary');
+          }
         } else {
-          alert(result.message || 'Failed to process the PDF file.');
+          alert(uploadResult.message || 'Error processing');
         }
       } catch (error) {
         console.error('Error uploading PDF:', error);
-        alert('Failed to process the PDF file.');
+        alert('Error processing the PDF');
       } finally {
-        setLoading(false);
+        setLoading(false); // stop loading
       }
     } else {
       alert('Please upload a valid PDF file.');
