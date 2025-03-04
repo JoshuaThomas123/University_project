@@ -5,7 +5,7 @@ function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-  });
+  }); // store username and password
   const [error, setError] = useState(''); 
   const navigate = useNavigate(); 
 
@@ -29,7 +29,7 @@ function Login({ onLogin }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      }); // takes user info from there signup
 
       const result = await response.json();
 
@@ -38,10 +38,10 @@ function Login({ onLogin }) {
         onLogin(); 
         navigate('/'); 
       } else {
-        setError(result.message || 'Invalid credentials');
+        setError(result.message || 'Invalid');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError('try again.');
       console.error('Error during login:', err);
     }
   };
@@ -100,3 +100,4 @@ function Login({ onLogin }) {
 }
 
 export default Login;
+
