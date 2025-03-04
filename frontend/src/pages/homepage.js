@@ -12,19 +12,19 @@ function Homepage() {
     fontSize: '18px',
     color: '#333',
     lineHeight: '1.6',
-  };
+  }; // main style
   const image2 = {
     display: 'flex', 
     justifyContent: 'space-between', 
     padding: '10px', 
     backgroundColor: '#f9f9f9', 
-  };
+  }; // button style
 
   const image = {
     width: '10%', 
     borderRadius: '0px', 
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
-  };
+  }; // photo style
   const button = {
     padding: '10px 20px', 
     fontSize: '16px',
@@ -33,7 +33,7 @@ function Homepage() {
     border: 'none', 
     borderRadius: '5px',
     cursor: 'pointer', 
-  };
+  }; // text spacing, size and color
   const navigate = useNavigate(); 
 
   return (
@@ -75,16 +75,16 @@ function Homepage() {
       />
       </div>
       <div style = {image2}>
-      <button style={button} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/Viewpage_Flashcard')}>
         flashcards
       </button>
-      <button style={button} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/Viewpage_Mindmap')}>
         mindmaps
       </button>
       <button style={button} onClick={() => navigate('/viewpage')}>
        summary page
       </button>
-      <button style={button} onClick={() => navigate('/viewpage')}>
+      <button style={button} onClick={() => navigate('/Viewpage_Question')}>
         questions
       </button>
 
