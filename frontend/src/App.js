@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Homepage from './pages/homepage';
 import Viewpage from './pages/viewpage';
 import Login from './pages/login';
 import Signup from './pages/signup';
-
+import Question from './pages/viewpage_question';
+import Flashcard from './pages/viewpage_flashcard';
+import Mindmaps from './pages/viewpage_mindmaps';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
 
@@ -16,7 +18,7 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-  };
+  }; // sets login to true and logout to false
 
  
   const ProtectedRoute = ({ children }) => {
@@ -24,7 +26,7 @@ function App() {
       return <Navigate to="/login" replace />;
     }
     return children;
-  };
+  }; // prevent users from accessing other pages
 
   return (
     <Router>
@@ -49,6 +51,30 @@ function App() {
               </ProtectedRoute>
             }
           />
+           <Route
+            path="/Viewpage_Question"
+            element={
+              <ProtectedRoute>
+                <Question />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Viewpage_Flashcard"
+            element={
+              <ProtectedRoute>
+                <Flashcard />
+              </ProtectedRoute>
+            }
+          />
+            <Route
+            path="/Viewpage_Mindmap"
+            element={
+              <ProtectedRoute>
+                <Mindmaps />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
@@ -56,3 +82,4 @@ function App() {
 }
 
 export default App;
+
