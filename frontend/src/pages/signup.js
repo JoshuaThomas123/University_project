@@ -7,7 +7,7 @@ function Signup() {
     email: '',
     password: '',
     DOB: '', 
-  });
+  }); // storing username,email,password,dob
   const [error, setError] = useState(''); 
   const navigate = useNavigate(); 
 
@@ -31,7 +31,7 @@ function Signup() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      }); // creates it within the database
 
       const result = await response.json();
 
@@ -39,11 +39,11 @@ function Signup() {
         alert('Signup successful!');
         navigate('/login'); 
       } else {
-        setError(result.message || 'Failed to create account. Please try again.');
+        setError(result.message || 'An error has occured');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
-      console.error('Error during signup:', err);
+      setError('Try again');
+      console.error('Error', err);
     }
   };
 
@@ -121,3 +121,4 @@ function Signup() {
 }
 
 export default Signup;
+
