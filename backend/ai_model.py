@@ -38,9 +38,6 @@ class AISummarizer:
             return "An error occurred while generating the summary."
 
     def generate_questions(self, text, num_questions=5):
-        """
-        Generate multiple distinct questions based on the given input text.
-        """
         try:
             if not text.strip():
                 return ["Input text is empty or contains only whitespace."]
@@ -73,9 +70,6 @@ class AISummarizer:
             return ["An error occurred while generating questions."]
 
     def generate_flashcards(self, text, num_flashcards=5):
-        """
-        Generate flashcards as question-answer pairs based on the given input text.
-        """
         try:
             if not text.strip():
                 return [{"question": "Input text is empty or contains only whitespace.", "answer": ""}]
@@ -119,9 +113,6 @@ class AISummarizer:
             return [{"question": "An error occurred while generating flashcards.", "answer": ""}]
 
     def generate_mindmap(self, text, max_topics=5, max_subtopics=3):
-        """
-        Generate a mind map as a hierarchical structure of topics and subtopics.
-        """
         try:
             if not text.strip():
                 return {"error": "Input text is empty or contains only whitespace."}
