@@ -63,9 +63,9 @@ function Viewpage_Flashcard() {
           <ul>
             {flashcards.map((flashcard, index) => (
               <li key={index}>
-                <strong>Question:</strong> {flashcard.question}
+                 {flashcard.question} :
                 <br />
-                <strong>Answer:</strong> {flashcard.answer}
+                 {flashcard.answer}
               </li>
             ))}
           </ul>
