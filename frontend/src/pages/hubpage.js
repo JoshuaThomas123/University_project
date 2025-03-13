@@ -32,7 +32,7 @@ function Hubpage() {
 
   return (
     <header style={header}>
-      <p style={title}>StudyBot</p>
+       <p style={title} onClick={() => navigate('/')}  >Studybot</p>
       <button style={button} onClick={() => navigate('/Login')}>
         Login
       </button>
