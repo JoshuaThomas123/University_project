@@ -5,7 +5,7 @@ function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-  }); // store username and password
+  }); // Store username and password
   const [error, setError] = useState(''); 
   const navigate = useNavigate(); 
 
@@ -18,11 +18,11 @@ function Login({ onLogin }) {
     }));
   };
 
- 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     
+      
       const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: {
@@ -34,14 +34,17 @@ function Login({ onLogin }) {
       const result = await response.json();
 
       if (response.ok) {
+        
+        localStorage.setItem('user_id', result.user_id);
+
         alert('Login successful!');
         onLogin(); 
         navigate('/'); 
       } else {
-        setError(result.message || 'Invalid');
+        setError(result.message || 'Invalid username or password');
       }
     } catch (err) {
-      setError('try again.');
+      setError('An error occurred. Please try again.');
       console.error('Error during login:', err);
     }
   };
@@ -52,7 +55,7 @@ function Login({ onLogin }) {
         <form onSubmit={handleSubmit}>
           <h1>Login</h1>
 
-          
+        
           <div className="input-box">
             <input
               type="text"
@@ -78,7 +81,7 @@ function Login({ onLogin }) {
             />
           </div>
 
-         
+          
           <div className="remember-forgot">
             <label>
               <input type="checkbox" /> Remember me
@@ -88,10 +91,10 @@ function Login({ onLogin }) {
             </button>
           </div>
 
-         
+          
           {error && <p style={{ color: 'red' }}>{error}</p>}
 
-          
+         
           <button type="submit">Login</button>
         </form>
       </div>
