@@ -19,14 +19,12 @@ ai_summarizer = AISummarizer()
 def hash_password(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
+
 def verify_password(stored_password, provided_password):
     return stored_password == hash_password(provided_password)
 
 # calls the model to generate summary text
 def summarize_text(text):
-    """
-    Summarizes the given text using the AI model.
-    """
     try:
         summary = ai_summarizer.summarize(text)
         return summary
@@ -58,6 +56,7 @@ def create_contact():
         db.session.commit()
     except Exception as e:
         return jsonify({"message": "An error occurred while creating the user", "error": str(e)}), 400
+    
     return jsonify({"message": "User created!"}), 201
 
 # handles pdf upload
@@ -74,9 +73,10 @@ def upload_pdf(user_id):
     if file and file.filename.endswith('.pdf'):
         filename = file.filename.replace(" ", "_")  # sanitize filename
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
+        
         try:
             # extract text
+            file.save(filepath)
             with pdfplumber.open(filepath) as pdf:
                 pdf_text = ""
                 for page in pdf.pages:
@@ -105,6 +105,7 @@ def summarize(user_id):
         return jsonify({"message": "User not found"}), 404
     if not contact.pdf_text:
         return jsonify({"message": "No PDF text available for summarization"}), 400
+    
     try:
         # creates the summary
         summary = summarize_text(contact.pdf_text)
@@ -130,12 +131,13 @@ def generate_questions(user_id):
         return jsonify({"message": "User not found"}), 404
     if not contact.pdf_text:
         return jsonify({"message": "No PDF text available for question generation"}), 400
+    
     try:
-        
         questions = ai_summarizer.generate_questions(contact.pdf_text, num_questions=5)
-        # update questions to model
-        contact.questions = str(questions)  
+         # update questions to model
+        contact.questions = str(questions) 
         db.session.commit()
+        
         return jsonify({
             "message": "Questions generated successfully",
             "questions": questions
@@ -151,12 +153,13 @@ def generate_flashcards(user_id):
         return jsonify({"message": "User not found"}), 404
     if not contact.pdf_text:
         return jsonify({"message": "No PDF text available for flashcard generation"}), 400
+    
     try:
-       
         flashcards = ai_summarizer.generate_flashcards(contact.pdf_text, num_flashcards=5)
         # update flashcards to model
-        contact.flashcards = str(flashcards)  
+        contact.flashcards = str(flashcards)
         db.session.commit()
+        
         return jsonify({
             "message": "Flashcards generated successfully",
             "flashcards": flashcards
@@ -172,11 +175,11 @@ def generate_mindmap(user_id):
         return jsonify({"message": "User not found"}), 404
     if not contact.pdf_text:
         return jsonify({"message": "No PDF text available for mind map generation"}), 400
+    
     try:
-        
         mindmap = ai_summarizer.generate_mindmap(contact.pdf_text, max_topics=5, max_subtopics=3)
         # update mindmap to model
-        contact.mindmap = str(mindmap)  
+        contact.mindmap = str(mindmap)
         db.session.commit()
         return jsonify({
             "message": "Mind map generated successfully",
@@ -184,20 +187,30 @@ def generate_mindmap(user_id):
         }), 200
     except Exception as e:
         return jsonify({"message": "Failed to generate mind map", "error": str(e)}), 500
-
 # used to login for user
 @app.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username")
     password = request.json.get("password")
+    
     if not username or not password:
-        return jsonify({"success": False, "message": "Username and password are required"}), 400
+        return jsonify({
+            "success": False,
+            "message": "Username and password are required"
+        }), 400
     user = Contact.query.filter_by(username=username).first()
     if not user or not verify_password(user.password, password):
-        return jsonify({"success": False, "message": "Invalid username or password"}), 401
-    return jsonify({"success": True, "message": "Login successful"}), 200
+        return jsonify({
+            "success": False,
+            "message": "Invalid username or password"
+        }), 401
+    return jsonify({
+        "success": True,
+        "message": "Login successful",
+        "user_id": user.id  
+    }), 200
 
-# run the app
+# Run the Flask app
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
