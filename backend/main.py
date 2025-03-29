@@ -155,7 +155,7 @@ def generate_flashcards(user_id):
         return jsonify({"message": "No PDF text available for flashcard generation"}), 400
     
     try:
-        flashcards = ai_summarizer.generate_flashcards(contact.pdf_text, num_flashcards=5)
+        flashcards = ai_summarizer.generate_flashcards(contact.pdf_text, num_flashcards=2)
         # update flashcards to model
         contact.flashcards = str(flashcards)
         db.session.commit()
