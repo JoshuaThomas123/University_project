@@ -69,7 +69,7 @@ class AISummarizer:
             print(f"Error during question generation: {str(e)}")
             return ["An error occurred while generating questions."]
 
-    def generate_flashcards(self, text, num_flashcards=5):
+    def generate_flashcards(self, text, num_flashcards=2):
         try:
             if not text.strip():
                 return [{"question": "Input text is empty or contains only whitespace.", "answer": ""}]
